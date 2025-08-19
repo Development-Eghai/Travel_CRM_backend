@@ -1,9 +1,12 @@
-from sqlalchemy import Column, Integer, String
-from app.core.database import Base
+from pydantic import BaseModel
 
-class Trip(Base):
-    __tablename__ = "trips"
+class TripCreate(BaseModel):
+    destination: str
+    start_date: str
+    end_date: str
 
-    id = Column(Integer, primary_key=True, index=True)
-    name = Column(String(255), nullable=False)
-    location = Column(String(255), nullable=False)
+class TripOut(BaseModel):
+    id: int
+    destination: str
+    start_date: str
+    end_date: str

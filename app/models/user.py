@@ -1,4 +1,5 @@
 from sqlalchemy import Column, Integer, String, Boolean, Enum, Text, DateTime
+from sqlalchemy.sql import func
 from app.core.database import Base
 import enum
 
@@ -6,6 +7,11 @@ class UserRole(str, enum.Enum):
     Admin = "Admin"
     Editor = "Editor"
     Agent = "Agent"
+
+class UserStatus(str, enum.Enum):
+    Active = "Active"
+    Inactive = "Inactive"
+    Suspended = "Suspended"
 
 class User(Base):
     __tablename__ = "users"
@@ -18,7 +24,9 @@ class User(Base):
     mobile_number = Column(String(20))
     password_hash = Column(Text, nullable=False)
     role = Column(Enum(UserRole), nullable=False)
+    status = Column(Enum(UserStatus), default=UserStatus.Active)
+    # address = Column(Text)
     send_user_email = Column(Boolean, default=False)
-    tenant_id = Column(Integer, nullable=False)
-    created_at = Column(DateTime)
-    updated_at = Column(DateTime)
+    tenant_id = Column(Integer, nullable=False, index=True)
+    created_at = Column(DateTime, server_default=func.now())
+    updated_at = Column(DateTime, onupdate=func.now())
