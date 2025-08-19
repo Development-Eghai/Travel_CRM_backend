@@ -1,5 +1,5 @@
 from sqlalchemy import Column, Integer, String, Boolean, Enum, Text, DateTime
-from sqlalchemy.sql import func
+from datetime import datetime
 from app.core.database import Base
 import enum
 
@@ -28,5 +28,5 @@ class User(Base):
     # address = Column(Text)
     send_user_email = Column(Boolean, default=False)
     tenant_id = Column(Integer, nullable=False, index=True)
-    created_at = Column(DateTime, server_default=func.now())
-    updated_at = Column(DateTime, onupdate=func.now())
+    created_at = Column(DateTime, default=datetime.now())
+    updated_at = Column(DateTime, default=datetime.now(), onupdate=datetime.now())
