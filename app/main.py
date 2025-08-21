@@ -9,7 +9,12 @@ from app.api import lead
 app = FastAPI(title="Travel CRM")
 from app.api import lead_comments
 from app.api import quotation
+from app.api import bookings
+from app.api import category
 
+app.include_router(category.router, prefix="/api/categories", tags=["Categories"])
+
+app.include_router(bookings.router, prefix="/api/bookings", tags=["Bookings"])
 app.include_router(lead_comments.router, prefix="/api/lead-comments", tags=["Lead Comments"])
 app.include_router(quotation.router, prefix="/api/quotation", tags=["Quotation"])
 app.include_router(trip_type.router, prefix="/api/trip-types", tags=["Trip Types"])
