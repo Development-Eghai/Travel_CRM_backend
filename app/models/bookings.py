@@ -1,6 +1,6 @@
 # app/models/booking.py
 from sqlalchemy import Column, Integer, String, Enum, DateTime, ForeignKey
-from sqlalchemy.sql import func
+from datetime import datetime
 from app.core.database import Base
 
 class Booking(Base):
@@ -26,5 +26,5 @@ class Booking(Base):
     )
 
     tenant_id = Column(Integer, nullable=False)
-    created_at = Column(DateTime(timezone=True), server_default=func.now())
-    updated_at = Column(DateTime(timezone=True), onupdate=func.now())
+    created_at = Column(DateTime, default=datetime.now())
+    updated_at = Column(DateTime, default=datetime.now(), onupdate=datetime.now())

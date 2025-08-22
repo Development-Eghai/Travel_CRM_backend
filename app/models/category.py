@@ -1,6 +1,6 @@
 # app/models/category.py
 from sqlalchemy import Column, Integer, String, Text, DateTime
-from sqlalchemy.sql import func
+from datetime import datetime
 from app.core.database import Base
 
 class Category(Base):
@@ -12,5 +12,5 @@ class Category(Base):
     description = Column(Text, nullable=True)
     image = Column(Text, nullable=True)
     tenant_id = Column(Integer, nullable=False)
-    created_at = Column(DateTime(timezone=True), server_default=func.now())
-    updated_at = Column(DateTime(timezone=True), onupdate=func.now())
+    created_at = Column(DateTime, default=datetime.now())
+    updated_at = Column(DateTime, default=datetime.now(), onupdate=datetime.now())
