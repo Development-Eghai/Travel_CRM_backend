@@ -1,6 +1,8 @@
 from sqlalchemy import Column, Integer, String, Boolean, Enum, Text, DateTime
 from datetime import datetime
 from app.core.database import Base
+from sqlalchemy.orm import relationship
+
 import enum
 
 class UserRole(str, enum.Enum):
@@ -28,5 +30,6 @@ class User(Base):
     # address = Column(Text)
     send_user_email = Column(Boolean, default=False)
     tenant_id = Column(Integer, nullable=False, index=True)
+    api_keys = relationship("APIKey", back_populates="user", cascade="all, delete-orphan")
     created_at = Column(DateTime, default=datetime.now())
     updated_at = Column(DateTime, default=datetime.now(), onupdate=datetime.now())
