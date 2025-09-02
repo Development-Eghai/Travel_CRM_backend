@@ -21,7 +21,7 @@ MarkupSafe==3.0.2
 orjson==3.11.3
 passlib==1.7.4
 pyasn1==0.6.1
-pydantic==2.6.4
+pydantic==2.8.2
 pydantic-settings==2.2.1
 PyMySQL==1.1.2
 python-dotenv==1.0.1
