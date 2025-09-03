@@ -2,9 +2,9 @@
 from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy.orm import Session
 from typing import List
-from app.schemas.fixed_departure import FixedDepartureCreate, FixedDepartureOut
-from app.models.fixed_departure import FixedDeparture
-from app.core.database import get_db
+from schemas.fixed_departure import FixedDepartureCreate, FixedDepartureOut
+from models.fixed_departure import FixedDeparture
+from core.database import get_db
 
 router = APIRouter()
 

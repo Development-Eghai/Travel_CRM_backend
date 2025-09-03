@@ -1,7 +1,7 @@
 from sqlalchemy.orm import Session
-from app.models.user import User
-from app.models.api_key import APIKey
-from app.schemas.user import UserCreate
+from models.user import User
+from models.api_key import APIKey
+from schemas.user import UserCreate
 from passlib.context import CryptContext
 from datetime import datetime
 import secrets

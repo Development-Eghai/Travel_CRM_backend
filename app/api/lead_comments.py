@@ -1,8 +1,8 @@
 from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy.orm import Session
-from app.core.database import get_db
-from app.models.lead_comments import LeadComment
-from app.schemas.lead_comments import LeadCommentCreate, LeadCommentOut
+from core.database import get_db
+from models.lead_comments import LeadComment
+from schemas.lead_comments import LeadCommentCreate, LeadCommentOut
 
 router = APIRouter()
 

@@ -2,9 +2,9 @@
 from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy.orm import Session
 from typing import List
-from app.schemas.trip_day import TripDayCreate, TripDayOut
-from app.models.trip_day import TripDay
-from app.core.database import get_db
+from schemas.trip_day import TripDayCreate, TripDayOut
+from models.trip_day import TripDay
+from core.database import get_db
 
 router = APIRouter()
 

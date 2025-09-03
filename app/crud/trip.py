@@ -1,6 +1,6 @@
 from sqlalchemy.orm import Session
-from app.models.trip import Trip
-from app.schemas.trip import TripCreate
+from models.trip import Trip
+from schemas.trip import TripCreate
 
 def create_trip(db: Session, trip: TripCreate):
     db_trip = Trip(**trip.dict())

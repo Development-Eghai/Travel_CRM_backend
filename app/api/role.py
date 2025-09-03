@@ -2,9 +2,9 @@
 from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy.orm import Session
 from typing import List
-from app.schemas.role import RoleCreate, RoleOut
-from app.models.role import Role
-from app.core.database import get_db
+from schemas.role import RoleCreate, RoleOut
+from models.role import Role
+from core.database import get_db
 
 router = APIRouter()
 

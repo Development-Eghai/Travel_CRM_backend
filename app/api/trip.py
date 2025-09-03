@@ -4,10 +4,10 @@ from sqlalchemy import select
 from typing import Optional
 from fastapi import APIRouter, Depends
 from sqlalchemy.orm import Session
-from app.core.database import SessionLocal
-from app.models.trip import Trip
-from app.schemas.trip import TripCreate, TripOut
-from app.crud.trip import create_trip, get_trips
+from core.database import SessionLocal
+from models.trip import Trip
+from schemas.trip import TripCreate, TripOut
+from crud.trip import create_trip, get_trips
 
 router = APIRouter()
 

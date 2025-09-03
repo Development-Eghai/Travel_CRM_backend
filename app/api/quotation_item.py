@@ -1,9 +1,9 @@
 from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy.orm import Session
 from typing import List
-from app.schemas.quotation_item import QuotationItemCreate, QuotationItemOut
-from app.models.quotation_item import QuotationItem
-from app.core.database import get_db
+from schemas.quotation_item import QuotationItemCreate, QuotationItemOut
+from models.quotation_item import QuotationItem
+from core.database import get_db
 
 router = APIRouter()
 

@@ -1,9 +1,9 @@
 from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy.orm import Session
 from typing import List
-from app.schemas.blog_category import BlogCategoryCreate, BlogCategoryOut
-from app.models.blog_category import BlogCategory
-from app.core.database import get_db
+from schemas.blog_category import BlogCategoryCreate, BlogCategoryOut
+from models.blog_category import BlogCategory
+from core.database import get_db
 
 router = APIRouter()
 
