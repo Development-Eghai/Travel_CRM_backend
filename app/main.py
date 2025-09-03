@@ -51,12 +51,18 @@ public_app = FastAPI(
 public_app.include_router(user_router, prefix="/api/users", tags=["Users"])
 
 
+try:
+    # 🧬 Mount both apps
+    app = FastAPI(title="Travel CRM Gateway")
+    app.mount("/secure", secure_app)
 
-# 🧬 Mount both apps
-app = FastAPI(title="Travel CRM Gateway")
-app.mount("/secure", secure_app)
+    app.mount("/public", public_app)
+except Exception as e:
+    import sys
+    print(f"Startup error: {e}", file=sys.stderr)
+    raise
 
-app.mount("/public", public_app)
+
 
 
 @app.get("/")
