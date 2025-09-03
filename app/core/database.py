@@ -1,6 +1,9 @@
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker, declarative_base, Session
 import os
+import pymysql
+pymysql.install_as_MySQLdb()
+
 
 # ✅ Update the driver to pymysql
 DATABASE_URL = os.getenv(
