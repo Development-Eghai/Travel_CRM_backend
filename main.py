@@ -1,5 +1,5 @@
 from fastapi import FastAPI, Depends
-from core.security import verify_api_key
+from app.core.security import verify_api_key
 from app.api.user import user_router
 from app.api import (
     trip, destination, activity, trip_type, lead, lead_comments, quotation,
