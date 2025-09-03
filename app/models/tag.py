@@ -1,7 +1,7 @@
 # app/models/tag.py
 from sqlalchemy import Column, Integer, String, Text, Boolean, DateTime
 from datetime import datetime
-from app.core.database import Base
+from ..core.database import Base
 
 class Tag(Base):
     __tablename__ = "tags"

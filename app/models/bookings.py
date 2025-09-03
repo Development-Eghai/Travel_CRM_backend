@@ -1,7 +1,7 @@
 # app/models/booking.py
 from sqlalchemy import Column, Integer, String, Enum, DateTime, ForeignKey
 from datetime import datetime
-from app.core.database import Base
+from ..core.database import Base
 
 class Booking(Base):
     __tablename__ = "bookings"

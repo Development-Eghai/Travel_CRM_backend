@@ -1,6 +1,6 @@
 from sqlalchemy import Column, Integer, String, Text, Enum, JSON, DateTime
 from datetime import datetime
-from app.core.database import Base
+from ..core.database import Base
 
 class Destination(Base):
     __tablename__ = "destinations"

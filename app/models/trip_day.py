@@ -2,7 +2,7 @@
 from sqlalchemy import Column, Integer, String, Text, DateTime, ForeignKey
 from sqlalchemy.dialects.mysql import JSON
 from datetime import datetime
-from app.core.database import Base
+from ..core.database import Base
 
 class TripDay(Base):
     __tablename__ = "trip_days"

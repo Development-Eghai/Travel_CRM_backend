@@ -1,7 +1,7 @@
 # app/models/lead_assignment.py
 from sqlalchemy import Column, Integer, Text, Date, Enum, ForeignKey, DateTime
 from datetime import datetime
-from app.core.database import Base
+from ..core.database import Base
 
 class LeadAssignment(Base):
     __tablename__ = "lead_assignments"
