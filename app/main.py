@@ -1,7 +1,7 @@
 from fastapi import FastAPI, Depends
 from core.security import verify_api_key
-from app.api.user import user_router
-from app.api import (
+from api.user import user_router
+from api import (
     trip, destination, activity, trip_type, lead, lead_comments, quotation,
     bookings, category, trip_day, fixed_departure, lead_assignment, task,
     role, site_setting, activity_type, blog_post, tag, blog_category,
