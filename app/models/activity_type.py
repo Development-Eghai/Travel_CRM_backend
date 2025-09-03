@@ -1,7 +1,7 @@
 # app/models/activity_type.py
 from sqlalchemy import Column, Integer, String, Text, Boolean, DateTime
 from datetime import datetime
-from ..core.database import Base
+from core.database import Base
 
 class ActivityType(Base):
     __tablename__ = "activity_types"

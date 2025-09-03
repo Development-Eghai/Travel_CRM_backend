@@ -1,7 +1,7 @@
 # app/models/role.py
 from sqlalchemy import Column, Integer, String, Text, DateTime, JSON
 from datetime import datetime
-from ..core.database import Base
+from core.database import Base
 
 class Role(Base):
     __tablename__ = "roles"

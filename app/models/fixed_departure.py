@@ -1,7 +1,7 @@
 # app/models/fixed_departure.py
 from sqlalchemy import Column, Integer, String, Text, DateTime, ForeignKey
 from datetime import datetime
-from ..core.database import Base
+from core.database import Base
 
 class FixedDeparture(Base):
     __tablename__ = "fixed_departures"

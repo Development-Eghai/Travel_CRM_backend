@@ -1,7 +1,7 @@
 # app/models/task.py
 from sqlalchemy import Column, Integer, String, Text, Date, Enum, ForeignKey, DateTime
 from datetime import datetime
-from ..core.database import Base
+from core.database import Base
 
 class Task(Base):
     __tablename__ = "tasks"

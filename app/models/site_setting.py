@@ -1,7 +1,7 @@
 # app/models/site_setting.py
 from sqlalchemy import Column, Integer, String, Text, JSON, Boolean, DateTime
 from datetime import datetime
-from ..core.database import Base
+from core.database import Base
 
 class SiteSetting(Base):
     __tablename__ = "site_settings"

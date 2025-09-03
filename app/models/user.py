@@ -1,6 +1,6 @@
 from sqlalchemy import Column, Integer, String, Boolean, Enum, Text, DateTime
 from datetime import datetime
-from ..core.database import Base
+from core.database import Base
 from sqlalchemy.orm import relationship
 
 import enum

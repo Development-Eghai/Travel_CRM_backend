@@ -1,7 +1,7 @@
 # app/models/blog_post.py
 from sqlalchemy import Column, Integer, String, Text, JSON, Boolean, Date, DateTime
 from datetime import datetime
-from ..core.database import Base
+from core.database import Base
 
 class BlogPost(Base):
     __tablename__ = "blog_posts"

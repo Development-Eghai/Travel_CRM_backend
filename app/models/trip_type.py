@@ -1,6 +1,6 @@
 from sqlalchemy import Column, Integer, String, Text, DateTime
 from datetime import datetime
-from ..core.database import Base
+from core.database import Base
 
 class TripType(Base):
     __tablename__ = "trip_types"

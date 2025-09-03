@@ -1,6 +1,6 @@
 from sqlalchemy import Column, Integer, String, Text, DECIMAL, DateTime, ForeignKey
 from datetime import datetime
-from ..core.database import Base
+from core.database import Base
 
 class QuotationItem(Base):
     __tablename__ = "quotation_items"
