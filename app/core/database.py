@@ -1,5 +1,6 @@
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker, declarative_base, Session
+from urllib.parse import quote_plus
 import os
 import pymysql
 
@@ -7,10 +8,11 @@ pymysql.install_as_MySQLdb()
 
 # ✅ Safe environment loading and engine creation
 try:
-    DATABASE_URL = os.getenv(
-        "DATABASE_URL",
-        "mysql+pymysql://root:PixelAdvant%40123@localhost:3306/travel_crm"
-    )
+    password = quote_plus("PixelAdvant@123")  # becomes 'PixelAdvant%40123'
+
+    DATABASE_URL = f"mysql+pymysql://root:{password}@localhost:3306/travel_crm"
+
+    
 
     if not DATABASE_URL:
         raise ValueError("DATABASE_URL is missing or empty")

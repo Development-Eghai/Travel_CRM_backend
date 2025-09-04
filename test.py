@@ -1,10 +1,12 @@
-import MySQLdb
+import pymysql
 
-conn = MySQLdb.connect(
+conn = pymysql.connect(
     host="localhost",
     user="root",
-    passwd="PixelAdvant@123",
-    db="travel_crm",
+    password="PixelAdvant@123",
+    database="travel_crm",
     port=3306
 )
-print("Connection successful!")
+print("✅ Connected successfully")
+conn.close()
+print("✅ Connection closed")
