@@ -1,4 +1,5 @@
 from fastapi import FastAPI, Depends
+from api import trip_management
 from core.security import verify_api_key
 from api.user import user_router
 from api import (
@@ -40,6 +41,9 @@ secure_app.include_router(lead.router, prefix="/api/leads", tags=["Leads"])
 secure_app.include_router(activity.router, prefix="/api/activities", tags=["Activities"])
 secure_app.include_router(trip.router, prefix="/api/trips", tags=["Trips"])
 secure_app.include_router(destination.router, prefix="/api/destinations", tags=["Destinations"])
+secure_app.include_router(trip_management.router, prefix="/api/trip-management", tags=["Trip Management"])  # ← ✅ Register here
+
+
 
 # 🧑‍💼 Public app for user registration/login
 public_app = FastAPI(
