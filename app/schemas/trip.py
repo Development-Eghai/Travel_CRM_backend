@@ -1,41 +1,124 @@
+from pydantic import BaseModel
+from typing import List, Optional
 from datetime import datetime
-from pydantic import BaseModel, ConfigDict
-from typing import Optional, List
 
+# -------------------- Itinerary --------------------
+
+class ItineraryItem(BaseModel):
+    day_number: int
+    title: str
+    description: str
+    image_urls: List[str]
+    activities: List[str]
+    hotel_name: str
+    meal_plan: List[str]
+
+class ItineraryOut(ItineraryItem):
+    pass
+
+# -------------------- Media --------------------
+
+class TripMediaSchema(BaseModel):
+    hero_image_url: str
+    thumbnail_url: str
+    gallery_urls: List[str]
+
+class TripMediaOut(TripMediaSchema):
+    pass
+
+# -------------------- Pricing --------------------
+
+class FixedDeparture(BaseModel):
+    from_date: datetime
+    to_date: datetime
+    available_slots: int
+    title: str
+    description: str
+    base_price: float
+    discount: float
+    final_price: float
+    booking_amount: float
+    gst_percentage: float
+
+class FixedDepartureOut(FixedDeparture):
+    pass
+
+class TripPricingSchema(BaseModel):
+    pricing_model: str
+    fixed_departure: List[FixedDeparture]
+
+class TripPricingOut(TripPricingSchema):
+    fixed_departure: List[FixedDepartureOut]
+
+# -------------------- Policies --------------------
+
+class TripPolicySchema(BaseModel):
+    title: str
+    content: str
+
+class TripPolicyOut(TripPolicySchema):
+    pass
+
+# -------------------- TripCreate --------------------
 
 class TripCreate(BaseModel):
     title: str
-    overview: Optional[str] = None
+    overview: Optional[str]
     destination_id: int
-    trip_model: str  # "Fixed" or "Custom"
-    trip_type_id: int
-    category_ids: List[int]
-    hotel_category: Optional[str] = None
-    price: float
-    original_price: Optional[float] = None
-    pickup_location: Optional[str] = None
-    drop_location: Optional[str] = None
-    fixed_slots: Optional[List[dict]] = None
-    tenant_id: int
+    destination_type: str
+    categories: List[str]
+    themes: List[str]
+    hotel_category: Optional[int]
+    pickup_location: Optional[str]
+    drop_location: Optional[str]
+    days: int
+    nights: int
+    meta_tags: Optional[str]
+    slug: str
+    pricing_model: str
+    highlights: Optional[str]
+    inclusions: Optional[str]
+    exclusions: Optional[str]
+    faqs: Optional[str]
+    terms: Optional[str]
+    privacy_policy: Optional[str]
+    payment_terms: Optional[str]
+    itinerary: Optional[List[ItineraryItem]]
+    media: Optional[TripMediaSchema]
+    pricing: Optional[TripPricingSchema]
+    policies: Optional[List[TripPolicySchema]]
 
-    model_config = ConfigDict(from_attributes=True)
-    
+# -------------------- TripOut --------------------
 
 class TripOut(BaseModel):
     id: int
     title: str
     overview: Optional[str]
     destination_id: int
-    trip_model: str
-    trip_type_id: int
-    category_ids: List[int]
-    hotel_category: Optional[str]
-    price: float
-    original_price: Optional[float]
+    destination_type: str
+    categories: List[str]
+    themes: List[str]
+    hotel_category: Optional[int]
     pickup_location: Optional[str]
     drop_location: Optional[str]
-    fixed_slots: Optional[List[dict]]
-    tenant_id: int
-    created_at: Optional[datetime]  # ← This is the key fix
-    updated_at: Optional[datetime]
-    model_config = ConfigDict(from_attributes=True)
+    days: int
+    nights: int
+    meta_tags: Optional[str]
+    slug: str
+    pricing_model: str
+    highlights: Optional[str]
+    inclusions: Optional[str]
+    exclusions: Optional[str]
+    faqs: Optional[str]
+    terms: Optional[str]
+    privacy_policy: Optional[str]
+    payment_terms: Optional[str]
+    created_at: datetime
+    updated_at: datetime
+    itinerary: Optional[List[ItineraryOut]]
+    media: Optional[TripMediaOut]
+    pricing: Optional[TripPricingOut]
+    policies: Optional[List[TripPolicyOut]]
+
+    class Config:
+        orm_mode = True

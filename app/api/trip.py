@@ -1,73 +1,76 @@
-from fastapi import APIRouter, Depends
+from fastapi import APIRouter, Depends, HTTPException, Query
 from sqlalchemy.orm import Session
-from sqlalchemy import select
-from typing import Optional
-from core.database import SessionLocal
-from models.trip import Trip
-from schemas.trip import TripCreate, TripOut
-from utils.response import api_json_response_format  # Adjust path if needed
+from core.database import get_db
+from schemas.trip import TripCreate
+from crud.trip import (
+    create_trip,
+    get_trips,
+    get_trip_by_id,
+    delete_trip,
+    serialize_trip,
+    update_trip
+)
 
 router = APIRouter()
 
-def get_db():
-    db = SessionLocal()
-    try:
-        yield db
-    finally:
-        db.close()
+# ✅ Unified response format
+def api_json_response_format(status: bool, message: str, error_code: int, data: any) -> dict:
+    return {
+        "success": status,
+        "message": message,
+        "error_code": error_code,
+        "data": data
+    }
 
-@router.post("/")
-def create_trip(trip_in: TripCreate, db: Session = Depends(get_db)):
+# ✅ List all trips with optional pagination
+@router.get("/", response_model=dict)
+def list_trips(skip: int = Query(0, ge=0), limit: int = Query(10, le=100), db: Session = Depends(get_db)) -> dict:
     try:
-        trip = Trip(**trip_in.model_dump())
-        db.add(trip)
-        db.commit()
-        db.refresh(trip)
-        return api_json_response_format(True, "Trip created successfully.", 201, TripOut.model_validate(trip).model_dump())
+        trips = get_trips(db, skip=skip, limit=limit)
+        return api_json_response_format(True, "Trips fetched successfully", 0, trips)
     except Exception as e:
-        return api_json_response_format(False, f"Error creating trip: {e}", 500, {})
+        return api_json_response_format(False, str(e), 500, None)
 
-@router.put("/{trip_id}")
-def update_trip(trip_id: int, trip_in: TripCreate, db: Session = Depends(get_db)):
+# ✅ Get single trip by ID
+@router.get("/{trip_id}", response_model=dict)
+def get_trip_by_id_endpoint(trip_id: int, db: Session = Depends(get_db)) -> dict:
     try:
-        trip = db.get(Trip, trip_id)
+        trip = get_trip_by_id(db, trip_id)
         if not trip:
-            return api_json_response_format(False, "Trip not found", 404, {})
-        for key, value in trip_in.model_dump().items():
-            setattr(trip, key, value)
-        db.commit()
-        db.refresh(trip)
-        return api_json_response_format(True, "Trip updated successfully.", 200, TripOut.model_validate(trip).model_dump())
+            return api_json_response_format(False, "Trip not found", 404, None)
+        return api_json_response_format(True, "Trip fetched successfully", 0, trip)
     except Exception as e:
-        return api_json_response_format(False, f"Error updating trip: {e}", 500, {})
+        return api_json_response_format(False, str(e), 500, None)
 
-@router.delete("/{trip_id}")
-def delete_trip(trip_id: int, db: Session = Depends(get_db)):
+# ✅ Create new trip
+@router.post("/", response_model=dict)
+def create_trip_endpoint(trip: TripCreate, db: Session = Depends(get_db)) -> dict:
     try:
-        trip = db.get(Trip, trip_id)
-        if not trip:
-            return api_json_response_format(False, "Trip not found", 404, {})
-        db.delete(trip)
-        db.commit()
-        return api_json_response_format(True, "Trip deleted successfully.", 200, {})
+        new_trip = create_trip(db, trip)
+        return api_json_response_format(True, "Trip created successfully", 0, serialize_trip(new_trip))
     except Exception as e:
-        return api_json_response_format(False, f"Error deleting trip: {e}", 500, {})
+        return api_json_response_format(False, str(e), 500, None)
 
-@router.get("/{trip_id}")
-def get_trip_by_id(trip_id: int, db: Session = Depends(get_db)):
+# ✅ Update existing trip
+@router.put("/{trip_id}", response_model=dict)
+def update_trip_endpoint(trip_id: int, trip: TripCreate, db: Session = Depends(get_db)) -> dict:
     try:
-        trip = db.get(Trip, trip_id)
-        if not trip:
-            return api_json_response_format(False, "Trip not found", 404, {})
-        return api_json_response_format(True, "Trip retrieved successfully.", 200, TripOut.model_validate(trip).model_dump())
+        updated = update_trip(db, trip_id, trip)
+        if not updated:
+            return api_json_response_format(False, "Trip not found", 404, None)
+        return api_json_response_format(True, "Trip updated successfully", 0, serialize_trip(updated))
+    except HTTPException as he:
+        return api_json_response_format(False, he.detail, he.status_code, None)
     except Exception as e:
-        return api_json_response_format(False, f"Error retrieving trip: {e}", 500, {})
+        return api_json_response_format(False, str(e), 500, None)
 
-@router.get("/")
-def get_trips(db: Session = Depends(get_db)):
+# ✅ Delete trip
+@router.delete("/{trip_id}", response_model=dict)
+def delete_trip_endpoint(trip_id: int, db: Session = Depends(get_db)) -> dict:
     try:
-        trips = db.scalars(select(Trip)).all()
-        data = [TripOut.model_validate(t).model_dump() for t in trips]
-        return api_json_response_format(True, "Trips retrieved successfully.", 200, data)
+        result = delete_trip(db, trip_id)
+        return api_json_response_format(True, result["message"], 0, None)
+    except HTTPException as he:
+        return api_json_response_format(False, he.detail, he.status_code, None)
     except Exception as e:
-        return api_json_response_format(False, f"Error retrieving trips: {e}", 500, {})
+        return api_json_response_format(False, str(e), 500, None)
