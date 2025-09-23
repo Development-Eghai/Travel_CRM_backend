@@ -1,26 +1,55 @@
 from datetime import datetime
-from pydantic import BaseModel, ConfigDict
-from typing import Optional, List
+from pydantic import BaseModel
+from typing import List, Optional
+
+class CustomPackageSchema(BaseModel):
+    title: str
+    description: Optional[str]
+    trip_ids: List[int]
 
 class DestinationCreate(BaseModel):
-    name: str
-    slug: str
-    hero_image: Optional[str] = None
-    description: Optional[str] = None
-    parent_id: Optional[int] = None
+    title: str
+    subtitle: Optional[str]
     destination_type: str
-    popular_trip_ids: Optional[List[int]] = []
-    blog_category_ids: Optional[List[int]] = []
-    featured_blog_ids: Optional[List[int]] = []
-    about: Optional[str] = None
-    how_to_reach: Optional[str] = None
-    activity_ids: Optional[List[int]] = []
-    travel_guide_tips: Optional[str] = None
-    tenant_id: int
+    primary_destination_id: Optional[int]
+    slug: Optional[str]
+    overview: Optional[str]
+    travel_guidelines: Optional[str]
+    popular_trip_ids: List[int]
+    custom_packages: List[CustomPackageSchema]
+    blog_category_ids: List[int]
+    featured_blog_ids: List[int]
+    activity_ids: List[int]
+    testimonial_ids: List[int]
+    related_blog_ids: List[int]
 
-    model_config = ConfigDict(from_attributes=True)
+class CustomPackageOut(BaseModel):
+    title: str
+    description: Optional[str]
+    trip_ids: List[int]
 
-class DestinationOut(DestinationCreate):
+class DestinationOut(BaseModel):
     id: int
-    created_at: Optional[datetime]
-    updated_at: Optional[datetime]
+    title: str
+    subtitle: Optional[str]
+    destination_type: str
+    primary_destination_id: Optional[int]
+    slug: str
+    overview: Optional[str]
+    travel_guidelines: Optional[str]
+    created_at: datetime
+    updated_at: datetime
+
+    # Related fields as flat lists of IDs
+    popular_trip_ids: List[int] = []
+    custom_packages: List[CustomPackageOut] = []
+    blog_category_ids: List[int] = []
+    featured_blog_ids: List[int] = []
+    related_blog_ids: List[int] = []
+    activity_ids: List[int] = []
+    testimonial_ids: List[int] = []
+
+    class Config:
+        orm_mode = True
+        from_attributes = True
+
