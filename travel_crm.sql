@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1:3306
--- Generation Time: Sep 23, 2025 at 10:32 AM
+-- Generation Time: Sep 24, 2025 at 01:05 PM
 -- Server version: 9.1.0
 -- PHP Version: 8.3.14
 
@@ -245,38 +245,198 @@ INSERT INTO `categories` (`id`, `name`, `slug`, `description`, `image`, `tenant_
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `custom_packages`
+--
+
+DROP TABLE IF EXISTS `custom_packages`;
+CREATE TABLE IF NOT EXISTS `custom_packages` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `destination_id` int DEFAULT NULL,
+  `title` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `description` text COLLATE utf8mb4_unicode_ci,
+  PRIMARY KEY (`id`),
+  KEY `destination_id` (`destination_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=21 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `custom_packages`
+--
+
+INSERT INTO `custom_packages` (`id`, `destination_id`, `title`, `description`) VALUES
+(19, 10, 'Exclusive Honeymoon Package', 'Romantic getaways in Kerala, Goa, and Udaipur.'),
+(20, 10, 'Spiritual Retreats', 'Meditation and temple tours in Rishikesh and Varanasi.');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `custom_package_trips`
+--
+
+DROP TABLE IF EXISTS `custom_package_trips`;
+CREATE TABLE IF NOT EXISTS `custom_package_trips` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `package_id` int DEFAULT NULL,
+  `trip_id` int DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `package_id` (`package_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=31 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `custom_package_trips`
+--
+
+INSERT INTO `custom_package_trips` (`id`, `package_id`, `trip_id`) VALUES
+(28, 19, 103),
+(29, 19, 104),
+(30, 20, 105);
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `destinations`
 --
 
 DROP TABLE IF EXISTS `destinations`;
 CREATE TABLE IF NOT EXISTS `destinations` (
   `id` int NOT NULL AUTO_INCREMENT,
-  `name` varchar(255) DEFAULT NULL,
-  `slug` varchar(255) DEFAULT NULL,
-  `hero_image` text,
-  `description` text,
-  `parent_id` int DEFAULT NULL,
-  `destination_type` enum('Domestic','International') DEFAULT NULL,
-  `popular_trip_ids` json DEFAULT NULL,
-  `blog_category_ids` json DEFAULT NULL,
-  `featured_blog_ids` json DEFAULT NULL,
-  `about` text,
-  `how_to_reach` text,
-  `activity_ids` json DEFAULT NULL,
-  `travel_guide_tips` text,
-  `tenant_id` int DEFAULT NULL,
-  `created_at` datetime DEFAULT NULL,
-  `updated_at` datetime DEFAULT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+  `title` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `subtitle` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `destination_type` varchar(50) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `primary_destination_id` int DEFAULT NULL,
+  `slug` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `overview` text COLLATE utf8mb4_unicode_ci,
+  `travel_guidelines` text COLLATE utf8mb4_unicode_ci,
+  `created_at` datetime DEFAULT CURRENT_TIMESTAMP,
+  `updated_at` datetime DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `slug` (`slug`),
+  KEY `idx_destinations_id` (`id`),
+  KEY `primary_destination_id` (`primary_destination_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Dumping data for table `destinations`
 --
 
-INSERT INTO `destinations` (`id`, `name`, `slug`, `hero_image`, `description`, `parent_id`, `destination_type`, `popular_trip_ids`, `blog_category_ids`, `featured_blog_ids`, `about`, `how_to_reach`, `activity_ids`, `travel_guide_tips`, `tenant_id`, `created_at`, `updated_at`) VALUES
-(1, 'Goa', 'goaaaa', 'https://example.com/goa.jpg', 'Beach paradise', NULL, 'Domestic', '[101, 102]', '[5, 6]', '[201]', 'Known for beaches and nightlife', 'Fly to Goa International Airport', '[301, 302]', 'Pack sunscreen and swimwear', 1, '2025-08-29 18:29:46', '2025-08-29 18:29:46'),
-(2, 'Bangkok', 'Bangkok', 'https://example.com/goa.jpg', 'Club paradise', NULL, 'International', '[101, 102]', '[5, 6]', '[201]', 'Known for beaches and nightlife', 'Fly to Bangkok International Airport', '[301, 302]', 'Pack sunscreen and swimwear', 1, '2025-09-15 11:01:55', '2025-09-15 11:01:55');
+INSERT INTO `destinations` (`id`, `title`, `subtitle`, `destination_type`, `primary_destination_id`, `slug`, `overview`, `travel_guidelines`, `created_at`, `updated_at`) VALUES
+(10, 'India', 'India: A Land of Diversity and Culture555', 'Domestic', NULL, 'india', 'Explore the vibrant landscapes, rich heritage, and spiritual depth of India. From the Himalayas to the beaches of Goa, every corner offers a unique experience.', 'Carry valid ID proof. Follow local COVID protocols. Respect cultural norms.', '2025-09-23 16:35:04', '2025-09-23 16:35:04');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `destination_activities`
+--
+
+DROP TABLE IF EXISTS `destination_activities`;
+CREATE TABLE IF NOT EXISTS `destination_activities` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `destination_id` int DEFAULT NULL,
+  `activity_id` int DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `destination_id` (`destination_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=21 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `destination_activities`
+--
+
+INSERT INTO `destination_activities` (`id`, `destination_id`, `activity_id`) VALUES
+(19, 10, 401),
+(20, 10, 402);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `destination_blogs`
+--
+
+DROP TABLE IF EXISTS `destination_blogs`;
+CREATE TABLE IF NOT EXISTS `destination_blogs` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `destination_id` int DEFAULT NULL,
+  `blog_id` int DEFAULT NULL,
+  `featured` tinyint(1) DEFAULT '0',
+  PRIMARY KEY (`id`),
+  KEY `destination_id` (`destination_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=31 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `destination_blogs`
+--
+
+INSERT INTO `destination_blogs` (`id`, `destination_id`, `blog_id`, `featured`) VALUES
+(28, 10, 301, 1),
+(29, 10, 302, 0),
+(30, 10, 303, 0);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `destination_blog_categories`
+--
+
+DROP TABLE IF EXISTS `destination_blog_categories`;
+CREATE TABLE IF NOT EXISTS `destination_blog_categories` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `destination_id` int DEFAULT NULL,
+  `category_id` int DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `destination_id` (`destination_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=21 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `destination_blog_categories`
+--
+
+INSERT INTO `destination_blog_categories` (`id`, `destination_id`, `category_id`) VALUES
+(19, 10, 201),
+(20, 10, 202);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `destination_testimonials`
+--
+
+DROP TABLE IF EXISTS `destination_testimonials`;
+CREATE TABLE IF NOT EXISTS `destination_testimonials` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `destination_id` int DEFAULT NULL,
+  `testimonial_id` int DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `destination_id` (`destination_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=21 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `destination_testimonials`
+--
+
+INSERT INTO `destination_testimonials` (`id`, `destination_id`, `testimonial_id`) VALUES
+(19, 10, 501),
+(20, 10, 502);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `destination_trips`
+--
+
+DROP TABLE IF EXISTS `destination_trips`;
+CREATE TABLE IF NOT EXISTS `destination_trips` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `destination_id` int DEFAULT NULL,
+  `trip_id` int DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `destination_id` (`destination_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=21 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `destination_trips`
+--
+
+INSERT INTO `destination_trips` (`id`, `destination_id`, `trip_id`) VALUES
+(19, 10, 101),
+(20, 10, 102);
 
 -- --------------------------------------------------------
 
@@ -886,6 +1046,54 @@ INSERT INTO `users` (`id`, `username`, `email`, `first_name`, `last_name`, `mobi
 --
 ALTER TABLE `api_keys`
   ADD CONSTRAINT `api_keys_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`);
+
+--
+-- Constraints for table `custom_packages`
+--
+ALTER TABLE `custom_packages`
+  ADD CONSTRAINT `custom_packages_ibfk_1` FOREIGN KEY (`destination_id`) REFERENCES `destinations` (`id`);
+
+--
+-- Constraints for table `custom_package_trips`
+--
+ALTER TABLE `custom_package_trips`
+  ADD CONSTRAINT `custom_package_trips_ibfk_1` FOREIGN KEY (`package_id`) REFERENCES `custom_packages` (`id`);
+
+--
+-- Constraints for table `destinations`
+--
+ALTER TABLE `destinations`
+  ADD CONSTRAINT `destinations_ibfk_1` FOREIGN KEY (`primary_destination_id`) REFERENCES `destinations` (`id`);
+
+--
+-- Constraints for table `destination_activities`
+--
+ALTER TABLE `destination_activities`
+  ADD CONSTRAINT `destination_activities_ibfk_1` FOREIGN KEY (`destination_id`) REFERENCES `destinations` (`id`);
+
+--
+-- Constraints for table `destination_blogs`
+--
+ALTER TABLE `destination_blogs`
+  ADD CONSTRAINT `destination_blogs_ibfk_1` FOREIGN KEY (`destination_id`) REFERENCES `destinations` (`id`);
+
+--
+-- Constraints for table `destination_blog_categories`
+--
+ALTER TABLE `destination_blog_categories`
+  ADD CONSTRAINT `destination_blog_categories_ibfk_1` FOREIGN KEY (`destination_id`) REFERENCES `destinations` (`id`);
+
+--
+-- Constraints for table `destination_testimonials`
+--
+ALTER TABLE `destination_testimonials`
+  ADD CONSTRAINT `destination_testimonials_ibfk_1` FOREIGN KEY (`destination_id`) REFERENCES `destinations` (`id`);
+
+--
+-- Constraints for table `destination_trips`
+--
+ALTER TABLE `destination_trips`
+  ADD CONSTRAINT `destination_trips_ibfk_1` FOREIGN KEY (`destination_id`) REFERENCES `destinations` (`id`);
 
 --
 -- Constraints for table `fixed_departures`

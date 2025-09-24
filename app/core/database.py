@@ -10,7 +10,7 @@ pymysql.install_as_MySQLdb()
 try:
     password = quote_plus("PixelAdvant@123")  # becomes 'PixelAdvant%40123'
 
-    DATABASE_URL = f"mysql+pymysql://root:{password}@localhost:3306/travel_crm"
+    DATABASE_URL = f"mysql://root:utsWPdbeqUHFGnFVlZohvRXDdmePdeMG@turntable.proxy.rlwy.net:31471/railway"
 
     
 
