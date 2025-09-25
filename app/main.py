@@ -1,5 +1,6 @@
 from fastapi import FastAPI, Depends
 from api import trip_management
+from api import invoice
 from core.security import verify_api_key
 from api.user import user_router
 from api import (
@@ -21,6 +22,7 @@ def root():
 
 
 # 🔗 Secure endpoints
+secure_app.include_router(invoice.router, prefix="/api/invoice", tags=["invoice"])
 secure_app.include_router(quotation_item.router, prefix="/api/quotation-items", tags=["Quotation Items"])
 secure_app.include_router(blog_category.router, prefix="/api/blog-categories", tags=["Blog Categories"])
 secure_app.include_router(tag.router, prefix="/api/tags", tags=["Tags"])

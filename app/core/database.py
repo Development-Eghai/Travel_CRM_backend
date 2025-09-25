@@ -8,11 +8,12 @@ pymysql.install_as_MySQLdb()
 
 # ✅ Safe environment loading and engine creation
 try:
-    password = quote_plus("PixelAdvant@123")  # becomes 'PixelAdvant%40123'
+    password = quote_plus("utsWPdbeqUHFGnFVlZohvRXDdmePdeMG")  # becomes 'PixelAdvant%40123'
 
     DATABASE_URL = f"mysql://root:utsWPdbeqUHFGnFVlZohvRXDdmePdeMG@turntable.proxy.rlwy.net:31471/railway"
 
-    
+    # DATABASE_URL = f"mysql://root:PixelAdvant%40123@localhost:3306/travel_crm"
+
 
     if not DATABASE_URL:
         raise ValueError("DATABASE_URL is missing or empty")
