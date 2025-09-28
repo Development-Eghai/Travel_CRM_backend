@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1:3306
--- Generation Time: Sep 25, 2025 at 11:52 AM
+-- Generation Time: Sep 28, 2025 at 05:48 AM
 -- Server version: 9.1.0
 -- PHP Version: 8.3.14
 
@@ -465,6 +465,67 @@ CREATE TABLE IF NOT EXISTS `fixed_departures` (
 
 INSERT INTO `fixed_departures` (`id`, `trip_id`, `title`, `start_date`, `end_date`, `description`, `tenant_id`, `created_at`, `updated_at`) VALUES
 (2, 1, 'WanderOn Himalayan Escape', '2025-09-15 10:00:00', '2025-09-20 18:00:00', 'A 6-day fixed departure to the Himalayas', 1, '2025-08-29 18:29:47', '2025-08-29 18:29:47');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `global_settings`
+--
+
+DROP TABLE IF EXISTS `global_settings`;
+CREATE TABLE IF NOT EXISTS `global_settings` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `site_title` varchar(255) DEFAULT NULL,
+  `tagline` varchar(255) DEFAULT NULL,
+  `company_name` varchar(255) DEFAULT NULL,
+  `site_description` text,
+  `logo_url` varchar(255) DEFAULT NULL,
+  `favicon_url` varchar(255) DEFAULT NULL,
+  `homepage_slider` text,
+  `contact_email` varchar(255) DEFAULT NULL,
+  `contact_phones` text,
+  `business_address` text,
+  `social_links` text,
+  `google_map_link` varchar(255) DEFAULT NULL,
+  `bank_name` varchar(255) DEFAULT NULL,
+  `account_number` varchar(100) DEFAULT NULL,
+  `ifsc_code` varchar(50) DEFAULT NULL,
+  `branch_name` varchar(100) DEFAULT NULL,
+  `upi_ids` text,
+  `qr_code_images` text,
+  `quotation_format` varchar(100) DEFAULT NULL,
+  `invoice_format` varchar(100) DEFAULT NULL,
+  `header_menu` text,
+  `footer_menu` text,
+  `meta_title` varchar(255) DEFAULT NULL,
+  `meta_description` text,
+  `meta_tags` text,
+  `og_title` varchar(255) DEFAULT NULL,
+  `og_description` text,
+  `og_image` varchar(255) DEFAULT NULL,
+  `terms_conditions` text,
+  `privacy_policy` text,
+  `payment_terms` text,
+  `cancellation_policy` text,
+  `refund_policy` text,
+  `email_incoming` text,
+  `email_form_submitted` text,
+  `email_quotation_sent` text,
+  `email_invoice_sent` text,
+  `email_lead_assigned` text,
+  `email_payment_confirmation` text,
+  `email_invoice_due` text,
+  `email_trip_updates` text,
+  `email_follow_up` text,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+--
+-- Dumping data for table `global_settings`
+--
+
+INSERT INTO `global_settings` (`id`, `site_title`, `tagline`, `company_name`, `site_description`, `logo_url`, `favicon_url`, `homepage_slider`, `contact_email`, `contact_phones`, `business_address`, `social_links`, `google_map_link`, `bank_name`, `account_number`, `ifsc_code`, `branch_name`, `upi_ids`, `qr_code_images`, `quotation_format`, `invoice_format`, `header_menu`, `footer_menu`, `meta_title`, `meta_description`, `meta_tags`, `og_title`, `og_description`, `og_image`, `terms_conditions`, `privacy_policy`, `payment_terms`, `cancellation_policy`, `refund_policy`, `email_incoming`, `email_form_submitted`, `email_quotation_sent`, `email_invoice_sent`, `email_lead_assigned`, `email_payment_confirmation`, `email_invoice_due`, `email_trip_updates`, `email_follow_up`) VALUES
+(1, 'Wanderlust CRM', 'Where journeys begin', 'Wanderlust Travels Pvt Ltd', 'A powerful CRM platform for travel businesses to manage leads, quotations, invoices, and more.', 'https://wanderlustcrm.com/assets/logo.png', 'https://wanderlustcrm.com/assets/favicon.ico', 'https://wanderlustcrm.com/assets/slider1.jpg,https://wanderlustcrm.com/assets/slider2.mp4', 'support@wanderlustcrm.com', '+91-9876543210,+91-9123456789', 'No. 45, Mount Road, Chennai, Tamil Nadu, India', 'https://facebook.com/wanderlustcrm,https://instagram.com/wanderlustcrm,https://linkedin.com/company/wanderlustcrm', 'https://maps.google.com/?q=Wanderlust+Travels+Chennai', 'HDFC Bank', '123456789012', 'HDFC0001234', 'Chennai Main', 'wanderlust@hdfcbank,crm@upi', 'https://wanderlustcrm.com/assets/qr1.png,https://wanderlustcrm.com/assets/qr2.png', 'Modern', 'Professional', '[{\"name\":\"Home\",\"url\":\"/\"},{\"name\":\"About\",\"url\":\"/about\"},{\"name\":\"Contact\",\"url\":\"/contact\"}]', '[{\"name\":\"Privacy\",\"url\":\"/privacy\"},{\"name\":\"Terms\",\"url\":\"/terms\"}]', 'Wanderlust CRM - Travel Business Platform', 'Manage your travel business with ease using Wanderlust CRM.', 'travel,crm,quotation,invoice,lead management', 'Wanderlust CRM', 'Your travel business, streamlined.', 'https://wanderlustcrm.com/assets/og-image.jpg', 'All bookings are subject to availability and confirmation.', 'We respect your privacy and do not share data with third parties.', '50% advance, balance before departure.', 'Full refund if cancelled 7 days prior.', 'Refunds processed within 7 working days.', 'Thank you for contacting Wanderlust CRM. We’ll get back to you shortly.', 'Your form has been submitted successfully.', 'Your quotation is ready. Please find the attached details.', 'Your invoice has been generated. Kindly review and proceed with payment.', 'A new lead has been assigned to you.', 'We’ve received your payment. Thank you!', 'Reminder: Your invoice is due soon.', 'Your trip itinerary has been updated.', 'Just checking in — let us know if you need any help.');
 
 -- --------------------------------------------------------
 
