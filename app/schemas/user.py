@@ -1,13 +1,21 @@
-from pydantic import BaseModel, EmailStr
+from pydantic import BaseModel, EmailStr, constr
 from enum import Enum
 from datetime import datetime
 from typing import Optional
 
+class UserStatus(str, Enum):
+    Active = "Active"
+    Inactive = "Inactive"
+    Suspended = "Suspended"
 # 🎭 Enums
 class UserRole(str, Enum):
     Admin = "Admin"
     Editor = "Editor"
     Agent = "Agent"
+
+class UserLogin(BaseModel):
+    email: EmailStr
+    password: str
 
 # 🧱 Base User Schema
 class UserBase(BaseModel):
@@ -18,11 +26,13 @@ class UserBase(BaseModel):
     mobile_number: Optional[str] = None
     role: UserRole
     send_user_email: bool = False
+    website: Optional[str] = None
     tenant_id: int
 
 # 🔐 User Creation Schema
 class UserCreate(UserBase):
-    password: str
+    password: constr(max_length=72) # type: ignore
+
 
 # 🧾 API Key Schema
 class APIKeyOut(BaseModel):
@@ -45,7 +55,9 @@ class UserOut(BaseModel):
     last_name: Optional[str] = None
     mobile_number: Optional[str] = None
     role: UserRole
+    status: UserStatus  # ✅ added
     send_user_email: bool
+    website: Optional[str] = None
     tenant_id: int
 
     model_config = {"from_attributes": True}

@@ -29,6 +29,7 @@ class User(Base):
     status = Column(Enum(UserStatus), default=UserStatus.Active)
     # address = Column(Text)
     send_user_email = Column(Boolean, default=False)
+    website = Column(String(255))
     tenant_id = Column(Integer, nullable=False, index=True)
     api_keys = relationship("APIKey", back_populates="user", cascade="all, delete-orphan")
     created_at = Column(DateTime, default=datetime.now())
